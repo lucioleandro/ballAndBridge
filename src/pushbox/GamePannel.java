@@ -141,6 +141,52 @@ public class GamePannel extends JPanel {
 		boxvalue[8][8] = 24;
 		updateBall();
 	}
+	
+	public void level3() {
+		ball = 0;
+		temp = temp1 = temp2 = temp3 = temp4 = temp5 = 0;
+		prevb1i = prevb2i = prevb3i = prevb4i = prevb5i = 0;
+		prevb1j = prevb2j = prevb3j = prevb4j = prevb5j = 0;
+
+		levelno = 2;
+		n = 5;
+
+		leveli = 11;
+		levelj = 21;
+		box = new JButton[leveli][levelj];
+		boxvalue = new int[leveli + 1][levelj + 1];
+
+		for (int i = 1; i < leveli; i++) {
+			for (int j = 1; j < levelj; j++) {
+				boxvalue[i][j] = (i == 1 || i == 10 || j == 1 || j == 20 || j == 7 || (i == 6 && j < 7)
+						|| (i < 7 && j == 16) || (i == 7 && j > 7) || (i == 4 && (j > 7 && j < 16))) ? 22 : -1;
+			}
+		}
+
+		boxvalue[8][6] = 0;
+		boxvalue[5][4] = 1;
+		boxvalue[2][12] = 2;
+		boxvalue[5][12] = 3;
+		boxvalue[8][19] = 4;
+		boxvalue[9][2] = 25;
+		boxvalue[7][2] = 25;
+		boxvalue[2][2] = 25;
+		boxvalue[2][19] = 23;
+		boxvalue[3][15] = 25;
+		boxvalue[6][8] = 25;
+		boxvalue[8][9] = 24;
+		boxvalue[9][15] = 25;
+		boxvalue[2][16] = 24;
+		boxvalue[2][7] = 24;
+		boxvalue[8][7] = 24;
+		boxvalue[7][11] = 24;
+		boxvalue[5][2] = 25;
+		boxvalue[5][7] = 24;
+		boxvalue[3][8] = 25;
+		boxvalue[5][15] = 25;
+		boxvalue[8][8] = 24;
+		updateBall();
+	}
 
 	public void createBox() {
 		controlPannel.setLayout(new GridLayout(10, 15, 0, 0));
@@ -207,54 +253,7 @@ public class GamePannel extends JPanel {
 
 		if (input == 'a' || input == 'A') {
 
-			level1: for (int i = 1; i < leveli; i++)
-				for (int j = 1; j < levelj; j++) {
-					if (boxvalue[i][j - 1] != 0 && boxvalue[i][j - 1] != 1 && boxvalue[i][j - 1] != 2
-							&& boxvalue[i][j - 1] != 3 && boxvalue[i][j - 1] != 4) {
-						if (boxvalue[i][j] == ball && j > 1 && boxvalue[i][j - 1] != 22 && boxvalue[i][j - 1] != 24) {
-							temp = 111;
-							int re = wincheck(i, j - 1);
-							if (re == 1)
-								return;
-							if (boxvalue[i][j - 1] == 25) {
-								if (ball == 0) {
-									temp1++;
-									prevb1i = i;
-									prevb1j = j - 1;
-								}
-								if (ball == 1) {
-									temp2++;
-									prevb2i = i;
-									prevb2j = j - 1;
-								}
-								if (ball == 2) {
-									temp3++;
-									prevb3i = i;
-									prevb3j = j - 1;
-								}
-								if (ball == 3) {
-									temp4++;
-									prevb4i = i;
-									prevb4j = j - 1;
-								}
-								if (ball == 4) {
-									temp5++;
-									prevb5i = i;
-									prevb5j = j - 1;
-								}
-
-							}
-							boxvalue[i][j] = -1;
-							boxvalue[i][j - 1] = ball;
-							if (levelno == 1)
-								level1open(i, j - 1);
-							if (levelno == 2)
-								level2open(i, j - 1);
-							break level1;
-						}
-					}
-
-				}
+			moveA();
 			if (temp1 == 0 && ball == 0 && temp == 111)
 				prev(prevb1i, prevb1j);
 			if (temp2 == 0 && ball == 1 && temp == 111)
@@ -281,55 +280,7 @@ public class GamePannel extends JPanel {
 		}
 		if (input == 'w' || input == 'W') {
 
-			level1: for (int i = 1; i < leveli; i++)
-				for (int j = 1; j < levelj; j++) {
-					if (boxvalue[i - 1][j] != 0 && boxvalue[i - 1][j] != 1 && boxvalue[i - 1][j] != 2
-							&& boxvalue[i - 1][j] != 3 && boxvalue[i - 1][j] != 4) {
-						if (boxvalue[i][j] == ball && i > 1 && boxvalue[i - 1][j] != 22 && boxvalue[i - 1][j] != 24) {
-							temp = 222;
-							int re = wincheck(i - 1, j);
-							if (re == 1)
-								return;
-							if (boxvalue[i - 1][j] == 25) {
-								if (ball == 0) {
-									temp1++;
-									prevb1i = i - 1;
-									prevb1j = j;
-								}
-								if (ball == 1) {
-									temp2++;
-									prevb2i = i - 1;
-									prevb2j = j;
-								}
-								if (ball == 2) {
-									temp3++;
-									prevb3i = i - 1;
-									prevb3j = j;
-								}
-								if (ball == 3) {
-									temp4++;
-									prevb4i = i - 1;
-									prevb4j = j;
-								}
-								if (ball == 4) {
-									temp5++;
-									prevb5i = i - 1;
-									prevb5j = j;
-								}
-
-							}
-
-							boxvalue[i][j] = -1;
-							boxvalue[i - 1][j] = ball;
-							if (levelno == 1)
-								level1open(i - 1, j);
-							if (levelno == 2)
-								level2open(i - 1, j);
-							break level1;
-						}
-					}
-
-				}
+			moveW();
 			if (temp1 == 0 && ball == 0 && temp == 222)
 				prev(prevb1i, prevb1j);
 			if (temp2 == 0 && ball == 1 && temp == 222)
@@ -356,55 +307,7 @@ public class GamePannel extends JPanel {
 		}
 		if (input == 's' || input == 'S') {
 
-			level1: for (int i = 0; i < leveli; i++)
-				for (int j = 1; j < levelj; j++) {
-					if (boxvalue[i + 1][j] != 0 && boxvalue[i + 1][j] != 1 && boxvalue[i + 1][j] != 2
-							&& boxvalue[i + 1][j] != 3 && boxvalue[i + 1][j] != 4) {
-						if (boxvalue[i][j] == ball && i < 10 && boxvalue[i + 1][j] != 22 && boxvalue[i + 1][j] != 24) {
-							temp = 333;
-							int re = wincheck(i + 1, j);
-							if (re == 1)
-								return;
-							if (boxvalue[i + 1][j] == 25) {
-								if (ball == 0) {
-									temp1++;
-									prevb1i = i + 1;
-									prevb1j = j;
-								}
-								if (ball == 1) {
-									temp2++;
-									prevb2i = i + 1;
-									prevb2j = j;
-								}
-								if (ball == 2) {
-									temp3++;
-									prevb3i = i + 1;
-									prevb3j = j;
-								}
-								if (ball == 3) {
-									temp4++;
-									prevb4i = i + 1;
-									prevb4j = j;
-								}
-								if (ball == 4) {
-									temp5++;
-									prevb5i = i + 1;
-									prevb5j = j;
-								}
-
-							}
-
-							boxvalue[i][j] = -1;
-							boxvalue[i + 1][j] = ball;
-							if (levelno == 1)
-								level1open(i + 1, j);
-							if (levelno == 2)
-								level2open(i + 1, j);
-							break level1;
-						}
-					}
-
-				}
+			moveS();
 
 			if (temp1 == 0 && ball == 0 && temp == 333)
 				prev(prevb1i, prevb1j);
@@ -430,55 +333,7 @@ public class GamePannel extends JPanel {
 			temp = 0;
 		}
 		if (input == 'd' || input == 'D') {
-			level1: for (int i = 1; i < leveli; i++)
-				for (int j = 1; j < levelj; j++) {
-					if (boxvalue[i][j + 1] != 0 && boxvalue[i][j + 1] != 1 && boxvalue[i][j + 1] != 2
-							&& boxvalue[i][j + 1] != 3 && boxvalue[i][j + 1] != 4) {
-						if (boxvalue[i][j] == ball && j < levelj - 1 && boxvalue[i][j + 1] != 22
-								&& boxvalue[i][j + 1] != 24) {
-							temp = 444;
-							int re = wincheck(i, j + 1);
-							if (re == 1)
-								return;
-							if (boxvalue[i][j + 1] == 25) {
-								if (ball == 0) {
-									temp1++;
-									prevb1i = i;
-									prevb1j = j + 1;
-								}
-								if (ball == 1) {
-									temp2++;
-									prevb2i = i;
-									prevb2j = j + 1;
-								}
-								if (ball == 2) {
-									temp3++;
-									prevb3i = i;
-									prevb3j = j + 1;
-								}
-								if (ball == 3) {
-									temp4++;
-									prevb4i = i;
-									prevb4j = j + 1;
-								}
-								if (ball == 4) {
-									temp5++;
-									prevb5i = i;
-									prevb5j = j + 1;
-								}
-
-							}
-
-							boxvalue[i][j] = -1;
-							boxvalue[i][j + 1] = ball;
-							if (levelno == 1)
-								level1open(i, j + 1);
-							if (levelno == 2)
-								level2open(i, j + 1);
-							break level1;
-						}
-					}
-				}
+			moveD();
 			if (temp1 == 0 && ball == 0 && temp == 444)
 				prev(prevb1i, prevb1j);
 			if (temp2 == 0 && ball == 1 && temp == 444)
@@ -508,6 +363,213 @@ public class GamePannel extends JPanel {
 			updateBall();
 		}
 
+	}
+
+	public void moveD() {
+		level1: for (int i = 1; i < leveli; i++)
+			for (int j = 1; j < levelj; j++) {
+				if (boxvalue[i][j + 1] != 0 && boxvalue[i][j + 1] != 1 && boxvalue[i][j + 1] != 2
+						&& boxvalue[i][j + 1] != 3 && boxvalue[i][j + 1] != 4) {
+					if (boxvalue[i][j] == ball && j < levelj - 1 && boxvalue[i][j + 1] != 22
+							&& boxvalue[i][j + 1] != 24) {
+						temp = 444;
+						int re = wincheck(i, j + 1);
+						if (re == 1)
+							return;
+						if (boxvalue[i][j + 1] == 25) {
+							if (ball == 0) {
+								temp1++;
+								prevb1i = i;
+								prevb1j = j + 1;
+							}
+							if (ball == 1) {
+								temp2++;
+								prevb2i = i;
+								prevb2j = j + 1;
+							}
+							if (ball == 2) {
+								temp3++;
+								prevb3i = i;
+								prevb3j = j + 1;
+							}
+							if (ball == 3) {
+								temp4++;
+								prevb4i = i;
+								prevb4j = j + 1;
+							}
+							if (ball == 4) {
+								temp5++;
+								prevb5i = i;
+								prevb5j = j + 1;
+							}
+
+						}
+
+						boxvalue[i][j] = -1;
+						boxvalue[i][j + 1] = ball;
+						if (levelno == 1)
+							level1open(i, j + 1);
+						if (levelno == 2)
+							level2open(i, j + 1);
+						break level1;
+					}
+				}
+			}
+	}
+
+	public void moveS() {
+		level1: for (int i = 0; i < leveli; i++)
+			for (int j = 1; j < levelj; j++) {
+				if (boxvalue[i + 1][j] != 0 && boxvalue[i + 1][j] != 1 && boxvalue[i + 1][j] != 2
+						&& boxvalue[i + 1][j] != 3 && boxvalue[i + 1][j] != 4) {
+					if (boxvalue[i][j] == ball && i < 10 && boxvalue[i + 1][j] != 22 && boxvalue[i + 1][j] != 24) {
+						temp = 333;
+						int re = wincheck(i + 1, j);
+						if (re == 1)
+							return;
+						if (boxvalue[i + 1][j] == 25) {
+							if (ball == 0) {
+								temp1++;
+								prevb1i = i + 1;
+								prevb1j = j;
+							}
+							if (ball == 1) {
+								temp2++;
+								prevb2i = i + 1;
+								prevb2j = j;
+							}
+							if (ball == 2) {
+								temp3++;
+								prevb3i = i + 1;
+								prevb3j = j;
+							}
+							if (ball == 3) {
+								temp4++;
+								prevb4i = i + 1;
+								prevb4j = j;
+							}
+							if (ball == 4) {
+								temp5++;
+								prevb5i = i + 1;
+								prevb5j = j;
+							}
+
+						}
+
+						boxvalue[i][j] = -1;
+						boxvalue[i + 1][j] = ball;
+						if (levelno == 1)
+							level1open(i + 1, j);
+						if (levelno == 2)
+							level2open(i + 1, j);
+						break level1;
+					}
+				}
+
+			}
+	}
+
+	public void moveW() {
+		level1: for (int i = 1; i < leveli; i++)
+			for (int j = 1; j < levelj; j++) {
+				if (boxvalue[i - 1][j] != 0 && boxvalue[i - 1][j] != 1 && boxvalue[i - 1][j] != 2
+						&& boxvalue[i - 1][j] != 3 && boxvalue[i - 1][j] != 4) {
+					if (boxvalue[i][j] == ball && i > 1 && boxvalue[i - 1][j] != 22 && boxvalue[i - 1][j] != 24) {
+						temp = 222;
+						int re = wincheck(i - 1, j);
+						if (re == 1)
+							return;
+						if (boxvalue[i - 1][j] == 25) {
+							if (ball == 0) {
+								temp1++;
+								prevb1i = i - 1;
+								prevb1j = j;
+							}
+							if (ball == 1) {
+								temp2++;
+								prevb2i = i - 1;
+								prevb2j = j;
+							}
+							if (ball == 2) {
+								temp3++;
+								prevb3i = i - 1;
+								prevb3j = j;
+							}
+							if (ball == 3) {
+								temp4++;
+								prevb4i = i - 1;
+								prevb4j = j;
+							}
+							if (ball == 4) {
+								temp5++;
+								prevb5i = i - 1;
+								prevb5j = j;
+							}
+
+						}
+
+						boxvalue[i][j] = -1;
+						boxvalue[i - 1][j] = ball;
+						if (levelno == 1)
+							level1open(i - 1, j);
+						if (levelno == 2)
+							level2open(i - 1, j);
+						break level1;
+					}
+				}
+
+			}
+	}
+
+	public void moveA() {
+		level1: for (int i = 1; i < leveli; i++)
+			for (int j = 1; j < levelj; j++) {
+				if (boxvalue[i][j - 1] != 0 && boxvalue[i][j - 1] != 1 && boxvalue[i][j - 1] != 2
+						&& boxvalue[i][j - 1] != 3 && boxvalue[i][j - 1] != 4) {
+					if (boxvalue[i][j] == ball && j > 1 && boxvalue[i][j - 1] != 22 && boxvalue[i][j - 1] != 24) {
+						temp = 111;
+						int re = wincheck(i, j - 1);
+						if (re == 1)
+							return;
+						if (boxvalue[i][j - 1] == 25) {
+							if (ball == 0) {
+								temp1++;
+								prevb1i = i;
+								prevb1j = j - 1;
+							}
+							if (ball == 1) {
+								temp2++;
+								prevb2i = i;
+								prevb2j = j - 1;
+							}
+							if (ball == 2) {
+								temp3++;
+								prevb3i = i;
+								prevb3j = j - 1;
+							}
+							if (ball == 3) {
+								temp4++;
+								prevb4i = i;
+								prevb4j = j - 1;
+							}
+							if (ball == 4) {
+								temp5++;
+								prevb5i = i;
+								prevb5j = j - 1;
+							}
+
+						}
+						boxvalue[i][j] = -1;
+						boxvalue[i][j - 1] = ball;
+						if (levelno == 1)
+							level1open(i, j - 1);
+						if (levelno == 2)
+							level2open(i, j - 1);
+						break level1;
+					}
+				}
+
+			}
 	}
 
 	public void prev(int i, int j) {
@@ -729,3 +791,5 @@ public class GamePannel extends JPanel {
 	private JLabel jLabel1;
 	// End of variables declaration//GEN-END:variables
 }
+
+
